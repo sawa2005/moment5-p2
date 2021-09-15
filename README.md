@@ -14,5 +14,7 @@ Och om det inte märktes redan så använde jag Gulp för att möjliggöra denna
 * Först skapade jag en projektmapp och startar ett nytt npm-projekt i denna mapp.
 * Sedan installerar jag alla npm-paket som behövs.
 * Efter detta skapar jag grundstrukturen för min webbplats, alltså mappar, filer, bilder osv.
-* Alla dessa filer och mappar läggs i en annan mapp som jag kallar src.
-* 
+* Alla dessa filer och mappar läggs i en annan mapp som jag kallar src. Samtidigt skapar jag en fil som kallas pub (filen där mina filer som är redo för publicering ska finnas).
+* Sedan implementerar jag alla paket i min gulpfile.js och skapar en .gitignore fil för att ignorera node_modules mappen.
+* Sist av sakerna jag gör innan jag pushar allt skapar jag README.md-filen där jag lägger till informationen som behövs.
+* Och sist men inte minst pushar jag allt som har skapats inom projektmappen till GitHub.
