@@ -3,14 +3,24 @@ const cleanCSS = require('gulp-clean-css');
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify-es').default;
 const { src, dest, series, watch, task } = require('gulp');
+var sass = require('gulp-sass')(require('sass'));
 var browserSync = require('browser-sync').create();
 
 // File directories
 const files = {
     htmlPath: "src/**/*.html",
-    cssPath: "src/styles/*.css",
+    cssPath: "src/css/*.css",
+    sassPath: "src/styles/*.scss",
     jsPath: "src/scripts/*.js",
     imgPath: "src/images/*"
+}
+
+// SASS-task
+function sassTask() {
+    return src(files.sassPath)
+    .pipe(sass().on('error', sass.logError))
+    .pipe(dest('src/css')
+    );
 }
 
 // HTML-task / Kopierar HTML-filerna
@@ -59,19 +69,21 @@ function browsersyncReload(cb) {
 // Watch Task / Ser till att rätt task körs om någon fil ändras
 function watchTask(){
     watch(files.htmlPath, browsersyncReload);
-    watch([files.cssPath, files.jsPath], browsersyncReload);
+    watch([files.sassPath, files.jsPath], browsersyncReload);
     watch(files.htmlPath, copyHTML);
-    watch(files.cssPath, cssTask);
+    watch(files.sassPath, sassTask);
     watch(files.jsPath, jsTask);
+    watch(files.cssPath, cssTask);
     watch(files.imgPath, imgTask);
 }
 
 // Exporterar alla tasks
 exports.default = series(
     copyHTML, 
-    cssTask, 
     jsTask, 
     imgTask,
+    sassTask,
+    cssTask,
     browsersyncServer, 
     browsersyncReload, 
     watchTask);

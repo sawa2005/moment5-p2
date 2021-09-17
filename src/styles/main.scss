@@ -1,0 +1,131 @@
+$light-primary-color: #fff;
+$light-secondary-color: #ddd;
+$light-text: #000;
+$dark-primary-color: #101010;
+$dark-secondary-color: #000;
+$dark-text: #fff;
+$accent-color: #32a852;
+
+@mixin theme($light-theme: true) {
+    @if $light-theme {
+        background-color: $light-primary-color;
+        color: $light-text;
+    } @else {
+        background-color: $dark-primary-color;
+        color: $dark-text;
+    }
+}
+
+@mixin theme2($light-theme: true) {
+    @if $light-theme {
+        background-color: $light-secondary-color;
+    } @else {
+        background-color: $dark-secondary-color;
+    }
+}
+
+%text-shared {
+    font-family: Cambria, 'Times New Roman', serif;
+    font-size: 1.1em;
+}
+
+/* Main CSS-code */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    @include theme2 ($light-theme: true);
+    overflow-x: hidden;
+}
+
+.main {
+    @include theme ($light-theme: true);
+    margin: auto;
+    max-width: 1200px;
+    width: 100%;
+}
+
+h2 {
+    font-family: Rubik, sans-serif;
+    font-size: 2.3em;
+    margin-top: 25px;
+}
+
+p {
+    @extend %text-shared;
+    max-width: 600px;
+    margin-top: 15px;
+}
+
+a {
+    @extend %text-shared;
+    color: $accent-color;
+    transition: 0.2s;
+}
+
+a:hover {
+    color: lighten($accent-color, 20%);
+}
+
+a:visited {
+    color: darken($accent-color, 20%);
+}
+
+nav {
+    padding: 25px;
+
+    ul {
+        list-style-type: none;
+        display: flex;
+        justify-content: space-evenly;
+        max-width: 500px;
+        margin: auto;
+    }
+    
+    a {
+        @include theme ($light-theme: true);
+        text-decoration: none;
+        font-family: Rubik, sans-serif;
+        font-size: 1.2em;
+        transition: 0.2s;
+    }
+    
+    a:hover {
+        color: $accent-color;
+    }
+}
+
+article {
+    max-width: 600px;
+    padding: 20px 0px 40px 0px;
+    margin: auto;
+
+    div {
+        display: flex;
+        justify-content: center;
+        
+        img {
+            margin: 10px;
+            max-width: 500px;
+            height: 100%;
+            width: 95%;
+        }
+    }
+}
+
+/* Responsive CSS-code */
+@media (max-width: 1020px) {
+    article div {
+        display: unset;
+        width: 100%;
+        margin: auto;
+    }
+}
+
+@media (max-width: 521px) {
+    article {
+        padding: 20px;
+    }
+}
