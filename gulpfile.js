@@ -2,6 +2,7 @@ const gulp = require("gulp");
 const cleanCSS = require('gulp-clean-css');
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify-es').default;
+const babel = require('gulp-babel');
 const { src, dest, series, watch, task } = require('gulp');
 var sass = require('gulp-sass')(require('sass'));
 var browserSync = require('browser-sync').create();
@@ -12,6 +13,7 @@ const files = {
     cssPath: "src/css/*.css",
     sassPath: "src/styles/*.scss",
     jsPath: "src/scripts/*.js",
+    jsPath2: "src/scripts2/*.js",
     imgPath: "src/images/*"
 }
 
@@ -37,9 +39,18 @@ function cssTask() {
     .pipe(dest('pub/styles'));
 }
 
+// Babel-task / Gör JavaScript-kod kompatibel med "alla" webbläsare
+function babelTask() {
+    return src(files.jsPath)
+    .pipe(babel({
+        presets: ['@babel/env']
+    }))
+    .pipe(dest('src/scripts2'));
+}
+
 // JS-task / Kopierar, konkatenerar och minimerar JS-filerna
 function jsTask() {
-    return src(files.jsPath)
+    return src(files.jsPath2)
     .pipe(concat('main.js'))
     .pipe(uglify())
     .pipe(dest('pub/scripts'));
@@ -72,14 +83,16 @@ function watchTask(){
     watch([files.sassPath, files.jsPath], browsersyncReload);
     watch(files.htmlPath, copyHTML);
     watch(files.sassPath, sassTask);
-    watch(files.jsPath, jsTask);
+    watch(files.jsPath, babelTask);
+    watch(files.jsPath2, jsTask);
     watch(files.cssPath, cssTask);
     watch(files.imgPath, imgTask);
 }
 
 // Exporterar alla tasks
 exports.default = series(
-    copyHTML, 
+    copyHTML,
+    babelTask, 
     jsTask, 
     imgTask,
     sassTask,
