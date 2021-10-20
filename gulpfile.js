@@ -13,7 +13,7 @@ const files = {
     cssPath: "src/css/*.css",
     sassPath: "src/styles/*.scss",
     jsPath: "src/scripts/*.js",
-    jsPath2: "src/scripts2/*.js",
+    babelPath: "src/babel/*.js",
     imgPath: "src/images/*"
 }
 
@@ -45,12 +45,12 @@ function babelTask() {
     .pipe(babel({
         presets: ['@babel/env']
     }))
-    .pipe(dest('src/scripts2'));
+    .pipe(dest('src/babel'));
 }
 
 // JS-task / Kopierar, konkatenerar och minimerar JS-filerna
 function jsTask() {
-    return src(files.jsPath2)
+    return src(files.babelPath)
     .pipe(concat('main.js'))
     .pipe(uglify())
     .pipe(dest('pub/scripts'));
@@ -84,7 +84,7 @@ function watchTask(){
     watch(files.htmlPath, copyHTML);
     watch(files.sassPath, sassTask);
     watch(files.jsPath, babelTask);
-    watch(files.jsPath2, jsTask);
+    watch(files.babelPath, jsTask);
     watch(files.cssPath, cssTask);
     watch(files.imgPath, imgTask);
 }

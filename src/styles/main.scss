@@ -29,6 +29,16 @@ $accent-color: #32a852;
     font-size: 1.1em;
 }
 
+%button-shared {
+    width: auto;
+    height: auto;
+    border-style: none;
+    color: $dark-text;
+    font-weight: bold;
+    padding: 13px;
+    cursor: pointer;
+}
+
 /* Main CSS-code */
 * {
     margin: 0;
@@ -45,12 +55,27 @@ body {
     margin: auto;
     max-width: 1200px;
     width: 100%;
+    min-height: 100vh;
+    padding: 20px 60px
+}
+
+h1 {
+    @extend %text-shared;
+    text-align: center;
+    font-size: 2.3em;
+    padding-top: 20px
 }
 
 h2 {
-    font-family: Rubik, sans-serif;
-    font-size: 2.3em;
-    margin-top: 25px;
+    @extend %text-shared;
+    font-size: 1.7em;
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+
+h3 {
+    @extend %text-shared;
+    margin-bottom: 5px;
 }
 
 p {
@@ -65,6 +90,59 @@ a {
     transition: 0.2s;
 }
 
+table {
+    @extend %text-shared;
+}
+
+td {
+    padding-right: 100px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid black;
+}
+
+th {
+    text-align: left;
+}
+
+form {
+    @extend %text-shared;
+    font-size: 1em;
+    display: flex;
+}
+
+.row {
+    margin-right: 30px;
+}
+
+.input {
+    margin-bottom: 20px;
+}
+
+input {
+    height: 30px;
+    width: 300px;
+    padding: 5px;
+}
+
+#submit {
+    @extend %button-shared;
+    background-color: $accent-color;
+}
+
+#submit:hover {
+    background-color: darken($accent-color, 10%);
+}
+
+button {
+    @extend %button-shared;
+    background-color: rgb(192, 31, 31);
+}
+
+button:hover {
+    background-color: lighten(rgb(192, 31, 31), 10%);
+}
+
 a:hover {
     color: lighten($accent-color, 20%);
 }
@@ -73,59 +151,45 @@ a:visited {
     color: darken($accent-color, 20%);
 }
 
-nav {
-    padding: 25px;
-
-    ul {
-        list-style-type: none;
-        display: flex;
-        justify-content: space-evenly;
-        max-width: 500px;
-        margin: auto;
-    }
-    
-    a {
-        @include theme ($light-theme: true);
-        text-decoration: none;
-        font-family: Rubik, sans-serif;
-        font-size: 1.2em;
-        transition: 0.2s;
-    }
-    
-    a:hover {
-        color: $accent-color;
-    }
-}
-
-article {
-    max-width: 600px;
-    padding: 20px 0px 40px 0px;
-    margin: auto;
-
-    div {
-        display: flex;
-        justify-content: center;
-        
-        img {
-            margin: 10px;
-            max-width: 500px;
-            height: 100%;
-            width: 95%;
-        }
-    }
-}
-
 /* Responsive CSS-code */
-@media (max-width: 1020px) {
-    article div {
-        display: unset;
-        width: 100%;
+@media (max-width: 850px) {
+    .main {
+        padding: 0;
+    }
+
+    #courses {
+        width: 90vw;
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    table {
         margin: auto;
+    }
+
+    td {
+        padding-right: 15px;
+    }
+
+    form {
+        display: unset;
+    }
+
+    .row {
+        margin: auto;
+        width: 300px;
     }
 }
 
-@media (max-width: 521px) {
-    article {
-        padding: 20px;
+@media (max-width: 500px) {
+    td {
+        padding-right: 5px;
+        font-size: 0.8em;
+    }
+
+    th {
+        display: none;
     }
 }
